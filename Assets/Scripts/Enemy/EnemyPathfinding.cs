@@ -9,16 +9,19 @@ public class EnemyPathfinding : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 moveDirection;
     private Knockback knockback;
+    private SpriteRenderer spriteRenderer;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         knockback = GetComponent<Knockback>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void FixedUpdate()
     {
         if (knockback.GettingKnockedback) { return; }
+
         Move();
     }
 
@@ -30,5 +33,15 @@ public class EnemyPathfinding : MonoBehaviour
     private void Move()
     {
         rb.MovePosition(rb.position + moveDirection * (moveSpeed * Time.fixedDeltaTime));
+
+        //slime doesnt flip the sprite when it changes dir, prob needs a bit more refactoring to work
+        if (moveDirection.x < 0)
+        {
+            spriteRenderer.flipX = true;
+        }
+        else
+        {
+            spriteRenderer.flipY = false;
+        }
     }
 }

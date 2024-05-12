@@ -1,30 +1,25 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : Singleton<PlayerController>
 {
-    public bool FacingLeft
-    {
-        get { return facingLeft; }
-    }
-    
-    [SerializeField] private float moveSpeed = 5.5f;
-    [SerializeField] private TrailRenderer trailRenderer;
+    public bool FacingLeft { get { return facingLeft; } }
+
+    [SerializeField] private float moveSpeed = 1f;
+    [SerializeField] private float dashSpeed = 4f;
+    [SerializeField] private TrailRenderer myTrailRenderer;
+    [SerializeField] private Transform weaponCollider;
 
     private PlayerControls playerControls;
-    private Vector2 movemment;
+    private Vector2 movement;
     private Rigidbody2D rb;
-    private Animator playerAnimator;
-    private SpriteRenderer spriteRenderer;
-    private float dashSpeed = 4.0f;
-    private bool isDashing = false;
+    private Animator myAnimator;
+    private SpriteRenderer mySpriteRender;
     private float startingMoveSpeed;
 
-
     private bool facingLeft = false;
-
+    private bool isDashing = false;
 
     protected override void Awake()
     {
@@ -32,13 +27,14 @@ public class PlayerController : Singleton<PlayerController>
 
         playerControls = new PlayerControls();
         rb = GetComponent<Rigidbody2D>();
-        playerAnimator = GetComponent<Animator>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        myAnimator = GetComponent<Animator>();
+        mySpriteRender = GetComponent<SpriteRenderer>();
     }
 
     private void Start()
     {
         playerControls.Combat.Dash.performed += _ => Dash();
+
         startingMoveSpeed = moveSpeed;
     }
 
@@ -58,54 +54,59 @@ public class PlayerController : Singleton<PlayerController>
         Move();
     }
 
-    //player moves function, uses rigidbody
-    private void Move()
+    public Transform GetWeaponCollider()
     {
-        rb.MovePosition(rb.position + movemment * (moveSpeed * Time.fixedDeltaTime));
+        return weaponCollider;
     }
 
-    //handles player input controls, gets a vector2 from the player input
     private void PlayerInput()
     {
-        movemment = playerControls.Movement.Move.ReadValue<Vector2>();
+        movement = playerControls.Movement.Move.ReadValue<Vector2>();
 
-        playerAnimator.SetFloat("moveX", movemment.x);
-        playerAnimator.SetFloat("moveY", movemment.y);
+        myAnimator.SetFloat("moveX", movement.x);
+        myAnimator.SetFloat("moveY", movement.y);
+    }
+
+    private void Move()
+    {
+        rb.MovePosition(rb.position + movement * (moveSpeed * Time.fixedDeltaTime));
     }
 
     private void AdjustPlayerFacingDirection()
     {
-        Vector3 mousePosition = Input.mousePosition;
+        Vector3 mousePos = Input.mousePosition;
         Vector3 playerScreenPoint = Camera.main.WorldToScreenPoint(transform.position);
 
-        if (mousePosition.x < playerScreenPoint.x)
+        if (mousePos.x < playerScreenPoint.x)
         {
-            spriteRenderer.flipX = true;
+            mySpriteRender.flipX = true;
             facingLeft = true;
         }
         else
         {
-            spriteRenderer.flipX = false;
+            mySpriteRender.flipX = false;
             facingLeft = false;
         }
     }
 
     private void Dash()
     {
-        if (isDashing) { return; }
-        isDashing = true;
-        moveSpeed *= dashSpeed;
-        trailRenderer.emitting = true;
-        StartCoroutine(EndDashRoutine());
+        if (!isDashing)
+        {
+            isDashing = true;
+            moveSpeed *= dashSpeed;
+            myTrailRenderer.emitting = true;
+            StartCoroutine(EndDashRoutine());
+        }
     }
 
     private IEnumerator EndDashRoutine()
     {
-        float dashTime = 0.2f;
-        float dashCD = 0.25f;
+        float dashTime = .2f;
+        float dashCD = .25f;
         yield return new WaitForSeconds(dashTime);
         moveSpeed = startingMoveSpeed;
-        trailRenderer.emitting = false;
+        myTrailRenderer.emitting = false;
         yield return new WaitForSeconds(dashCD);
         isDashing = false;
     }
