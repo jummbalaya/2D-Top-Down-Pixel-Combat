@@ -30,8 +30,22 @@ public class EnemyPathfinding : MonoBehaviour
         moveDirection = targetPosition;
     }
 
+    public void StopMoving()
+    {
+        moveDirection = Vector2.zero;
+    }
+
     private void Move()
     {
+        if (GetComponent<FollowPlayer>() != null)
+        {
+            if (GetComponent<FollowPlayer>().HasAggro)
+            {
+                return;
+            }
+        }
+
+
         rb.MovePosition(rb.position + moveDirection * (moveSpeed * Time.fixedDeltaTime));
 
         //slime doesnt flip the sprite when it changes dir, prob needs a bit more refactoring to work
@@ -39,9 +53,9 @@ public class EnemyPathfinding : MonoBehaviour
         {
             spriteRenderer.flipX = true;
         }
-        else
+        else if (moveDirection.x > 0)
         {
-            spriteRenderer.flipY = false;
+            spriteRenderer.flipX = false;
         }
     }
 }

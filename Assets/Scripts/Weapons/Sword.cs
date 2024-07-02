@@ -6,7 +6,6 @@ public class Sword : MonoBehaviour, IWeapon
 {
     [SerializeField] private GameObject slashAnimPrefab;
     [SerializeField] private Transform slashAnimSpawnPoint;
-    //[SerializeField] private float swordAttackCD = .5f;
     [SerializeField] private WeaponInfo weaponInfo;
 
 
@@ -23,6 +22,7 @@ public class Sword : MonoBehaviour, IWeapon
     {
         weaponCollider = PlayerController.Instance.GetWeaponCollider();
         slashAnimSpawnPoint = GameObject.Find("SlashAnimSpawnPoint").transform;
+        weaponCollider.gameObject.SetActive(false);
     }
 
     private void Update()

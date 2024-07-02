@@ -103,6 +103,8 @@ GameObject:
   - component: {fileID: 4211808261360747195}
   - component: {fileID: 3795785194718092244}
   - component: {fileID: 7888705393247516179}
+  - component: {fileID: 1865170455804009959}
+  - component: {fileID: 4658240086052864949}
   m_Layer: 0
   m_Name: Slime
   m_TagString: Untagged
@@ -124,7 +126,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1511259597499673062}
-  - {fileID: 1591756149882496336}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &822312963968816775
@@ -254,6 +255,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roamChangeDirTime: 2
+  attackRange: 0
+  enemyType: {fileID: 0}
+  attackCooldown: 1
+  stopmovementWhileAttacking: 0
 --- !u!114 &3110265807925458322
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -342,65 +347,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7092774c723bff04f9cddbb1c5d7f6ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1001 &8261663418972892437
-PrefabInstance:
+--- !u!114 &1865170455804009959
+MonoBehaviour:
   m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 6457695865025852896}
-    m_Modifications:
-    - target: {fileID: 201454825005569315, guid: c14d9ec5707f1094696ae953768c1702, type: 3}
-      propertyPath: m_Name
-      value: Slime Death VFX
-      objectReference: {fileID: 0}
-    - target: {fileID: 7255403262566582341, guid: c14d9ec5707f1094696ae953768c1702, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7255403262566582341, guid: c14d9ec5707f1094696ae953768c1702, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7255403262566582341, guid: c14d9ec5707f1094696ae953768c1702, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7255403262566582341, guid: c14d9ec5707f1094696ae953768c1702, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7255403262566582341, guid: c14d9ec5707f1094696ae953768c1702, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7255403262566582341, guid: c14d9ec5707f1094696ae953768c1702, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7255403262566582341, guid: c14d9ec5707f1094696ae953768c1702, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7255403262566582341, guid: c14d9ec5707f1094696ae953768c1702, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -90
-      objectReference: {fileID: 0}
-    - target: {fileID: 7255403262566582341, guid: c14d9ec5707f1094696ae953768c1702, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7255403262566582341, guid: c14d9ec5707f1094696ae953768c1702, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: c14d9ec5707f1094696ae953768c1702, type: 3}
---- !u!4 &1591756149882496336 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7255403262566582341, guid: c14d9ec5707f1094696ae953768c1702, type: 3}
-  m_PrefabInstance: {fileID: 8261663418972892437}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6323976386526860486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9abb141b7f5468a4391981d9ffb67055, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  goldCoin: {fileID: 8919081761541817400, guid: 1ddb43b75b2aa134d8d2b62521351d16, type: 3}
+  healthGlobe: {fileID: 8919081761541817400, guid: 4cbca26be02665a4284b34fa6f05ab22, type: 3}
+  staminaGlobe: {fileID: 8919081761541817400, guid: 48b9d5f8706472149a3c688975b86f49, type: 3}
+--- !u!114 &4658240086052864949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6323976386526860486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b3ee194b607db742af8007d492c1d4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pullDistance: 5
+  moveSpeed: 2
+  accelerationRate: 1
